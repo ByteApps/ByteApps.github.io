@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="93" width="335">
+	
+	<!-- BYTE -->
+	<g fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+		
+		
+		<path d="M4 44.00 l0 -30 l30 0 l0 30 l-30 0 l0 10 l50 0 l0 30 l-50 0 l0 -30" style="stroke:#0c90c7;" /> <!-- B, starts at the bottom left of the top square -->
+		<path d="M44 14.00 l0 30 l20 0 l0 40 l10 0 l0 -40 l20 0 l0 -30" style="stroke:#3DA6D2;" /> <!-- Y -->
+		<path d="M4.00 4.00 l100 0 l0 80 l10 0 l0 -80 l217 0" style="stroke:#64B8DB;" /> <!-- T left -->
+		<path d="M164 14.00 l-40 0 l0 30 l36 0 l0 10 l-36 0 l0 30 l40 0" style="stroke:#83C6E2;" /> <!-- E left -->
+	</g>
+	
+	<!-- APPS -->
+	<g fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+		
+		
+		
+		
+		
+		
+		
+		<path d="M172.00 86.00 l0 -74.00 l35.00 0 l0 74.00 l0 -37.00 l-35.00 0" style="stroke:#9CD1E8;" /> <!-- A -->
+		
+		
+		
+		<path d="M214.00 86.00 l0 -74.00 l35.00 0 l0 37.00 l-35.00 0" style="stroke:#B0DAED;" /> <!-- P -->
+		<path d="M256.00 86.00 l0 -74.00 l35.00 0 l0 37.00 l-35.00 0" style="stroke:#C0E1F1;" /> <!-- P -->
+		
+		
+		
+		
+		<path d="M2 91.00 l331.00 0 l0 -42.00 l-35.00 0 l0 -37.00 l35.00 0" style="stroke:#CDE7F4;" /><!-- S -->
+		<path d="M269.50 66.33 q25.00 20 50.00 0" style="stroke:#C0E1F1;" /> <!-- Smile -->
+	</g>
+</svg>
