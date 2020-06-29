@@ -6,17 +6,39 @@
     body {
       background-color: black;
       text-align: center;
+      color: white;
+      font-family: 'Courier New', Courier, monospace;
     }
-    a, p { 
+    a { 
       color: white;
     }
     a:visited {
       color: white;
     }
+    #toolsTable {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    table, th, td {
+      border: 1px solid gray;
+      text-align: left;
+    }
+    th {
+      font-weight: bolder;
+    }
+    th, td {
+      padding: 0.5em;
+    }
   </style>
 </head>
 <body>
-  <div><img alt="logo" border="0" src="logo.svgc.svg" width="450px"></div><br />
+  <img alt="logo" border="0" src="logo.svgc.svg" width="450px"><br />
+  
   <p>This site is under construction... but before you go, check out my latest developer tools below, enjoy!</p></br>
-  <div><a href="https://objsal.github.io/base64/">Base64 Encode ⇄ Decode</a></div>
+  
+  <table id="toolsTable">
+    <tr><th>Tool Name</th><th>Description</th></tr>
+    <tr><td><a href="https://objsal.github.io/base64/">Base64 Encode ⇄ Decode</a></td><td>Online tool to encode and decode strings</td></tr>
+    <tr><td><a href="https://github.com/ObjSal/svgc">svgc</a></td><td>Perform aritmetic operations within SVG files (Archived)</td></tr>
+  </table>
 </body>
