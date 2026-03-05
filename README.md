@@ -1,6 +1,6 @@
 # guerrero.vip
 
-Personal professional website for Salvador Guerrero — Engineering Director at Trimble (SketchUp).
+Personal professional website for Salvador Guerrero.
 
 Built as a single-page static site hosted on GitHub Pages. Features sections for experience, tools & projects, blog posts, and games.
 
