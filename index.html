@@ -1,68 +1,933 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>ByteApps</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salvador Guerrero - Engineering Director & Open Source Contributor</title>
+  <meta name="description" content="Salvador Guerrero - Engineering Director at Trimble Inc. (SketchUp). Open source contributor, cross-platform developer, and Bitcoin enthusiast based in Colorado.">
   <style>
+    :root {
+      --bg-primary: #0a0908;
+      --bg-secondary: #12110e;
+      --bg-card: #1a1814;
+      --bg-card-hover: #24211b;
+      --accent: #c47a1a;
+      --accent-glow: rgba(196, 122, 26, 0.12);
+      --accent-secondary: #f7931a;
+      --text-primary: #f0ebe2;
+      --text-secondary: #b0a68e;
+      --text-muted: #7a7060;
+      --border: #2e2a22;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      --radius: 12px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) var(--bg-secondary);
+    }
+
     body {
-      background-color: black;
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: var(--transition);
+    }
+
+    nav.scrolled {
+      border-bottom-color: var(--border);
+    }
+
+    nav .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color var(--transition);
+      position: relative;
+    }
+
+    nav .nav-links a:hover { color: var(--text-primary); }
+
+    nav .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+
+    nav .nav-links a:hover::after { width: 100%; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 20%, var(--accent-glow) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(247, 147, 26, 0.05) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-2%, 2%); }
+    }
+
+    .hero-content {
+      position: relative;
       text-align: center;
-      color: white;
-      font-family: 'Courier New', Courier, monospace;
+      max-width: 700px;
     }
-    a { 
-      color: white;
+
+    .hero-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      margin-bottom: 1.5rem;
+      object-fit: cover;
+      box-shadow: 0 0 40px var(--accent-glow);
     }
-    a:visited {
-      color: white;
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    table {
+
+    .hero .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero .tagline {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .social-links a svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* Sections */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-header h2 .accent {
+      color: var(--accent);
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    .about-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .about-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .about-card p, .about-card ul {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .about-card ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .about-card ul li {
+      padding: 0.25rem 0.75rem;
+      background: rgba(196, 122, 26, 0.1);
+      border: 1px solid rgba(196, 122, 26, 0.2);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--accent);
+    }
+
+    /* Experience */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent-secondary), var(--border));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0.6rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg-primary);
+      transform: translateX(-4px);
+    }
+
+    .timeline-item .period {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-item h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-item .company {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item .description {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(196, 122, 26, 0.1);
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      flex: 1;
+    }
+
+    .card .card-meta {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .card .tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(196, 122, 26, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(196, 122, 26, 0.15);
+    }
+
+    .card .tag.bitcoin {
+      background: rgba(247, 147, 26, 0.1);
+      color: var(--accent-secondary);
+      border-color: rgba(247, 147, 26, 0.15);
+    }
+
+    .card .arrow {
       margin-left: auto;
-      margin-right: auto;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      transition: var(--transition);
     }
-    table, th, td {
-      border: 1px solid gray;
-      text-align: left;
+
+    .card:hover .arrow {
+      color: var(--accent);
+      transform: translateX(4px);
     }
-    th {
-      font-weight: bolder;
+
+    /* Blog list */
+    .blog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
-    th, td {
-      padding: 0.5em;
+
+    .blog-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    .blog-item:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .blog-item .blog-date {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 80px;
+    }
+
+    .blog-item h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .blog-item .arrow {
+      color: var(--text-muted);
+      transition: var(--transition);
+      font-size: 1.1rem;
+    }
+
+    .blog-item:hover .arrow {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .blog-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .blog-more:hover {
+      gap: 0.75rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    footer .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    footer .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color var(--transition);
+    }
+
+    footer .footer-links a:hover { color: var(--accent); }
+
+    footer .copyright {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav .nav-links { display: none; }
+      nav .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 15, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 1rem 2rem 2rem;
+        border-bottom: 1px solid var(--border);
+        gap: 1rem;
+      }
+      .hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .blog-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .blog-item .blog-date { min-width: auto; }
+      section { padding: 3.5rem 1.25rem; }
+      .hero { padding: 5rem 1.25rem 3rem; }
     }
   </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <img alt="logo" border="0" src="logo.svgc.svg" width="450px">
-  <br>
-  <p>This site is under construction... but before you go, check out my latest developer tools and blog posts below, enjoy!</p>
-  <br>
-  <h1>Tools</h1>
-  <table id="toolsTable">
-    <tr><th>Name</th><th>Description</th></tr>
-    <tr><td><a target="_blank" href="https://objsal.github.io/PBKDF2/">PBKDF2</a></td><td>Online tool to test your Password-Based Key Derivation Function 2 implementation</td></tr>
-    <tr><td><a target="_blank" href="https://objsal.github.io/base-encoder/">Base encoder/decoder</a></td><td>Not a typical char by char conversion</td></tr>
-    <tr><td><a target="_blank" href="https://objsal.github.io/base64/">Base64 Encode ⇄ Decode</a></td><td>Online tool to encode and decode strings</td></tr>
-    <tr><td><a target="_blank" href="https://gist.github.com/ObjSal/fa8a340b3e8db4a73b9b6cbf88cf9b94">base58check.py</a></td><td>Base58Check implementation in Python</td></tr>
-    <tr><td><a target="_blank" href="https://github.com/ObjSal/svgc">svgc</a></td><td>Perform aritmetic operations within SVG files (Archived)<br>The ByteApps logo above was created using this tool.</td></tr>
-  </table>
-  <br>
-  <h1>Blog Posts</h1>
-  <table>
-    <tr><td><a target="_blank" href="https://medium.com/@ObjSal/add-jwt-authentication-to-node-js-78f59a31adc4">Add JWT Authentication to Node.js</a></td></tr>
-    <tr><td><a target="_blank" href="https://medium.com/@ObjSal/a-safer-way-to-deal-with-passwords-6f313e953636">A safer way to deal with passwords</a></td></tr>
-    <tr><td><a target="_blank" href="https://medium.com/javascript-in-plain-english/parsing-post-data-3-different-ways-in-node-js-e39d9d11ba8">Parsing post data 3 different ways in Node.js without third-party libraries</a></td></tr>
-    <tr><td>Read more at <a target="_blank" href="https://medium.com/@ObjSal">ObjSal@Medium</a></td></tr>
-  </table>
-  <br>
-  <h1>Games</h1>
-  <table>
-    <tr><th>Name</th><th>Description</th></tr>
-    <tr><td><a target="_blank" href="https://objsal.github.io/SpitBomb2-LevelEditor/">SpitBomb v2 Level Editor</a></td><td>Level Editor and pixel art editor for SpitBomb v2.</td></tr>
-    <tr><td><a target="_blank" href="https://github.com/ObjSal/Flappy-Unicorn">Flappy Unicorn</a></td><td>Created this project to show my kids how to create a game really quickly.</td></tr>
-    <tr><td><a target="_blank" href="https://github.com/ObjSal/SpitBomb">Spit Bomb</a></td><td>2 player shooting game</td></tr>
-    <tr><td><a target="_blank" href="https://github.com/ObjSal/FunKeys">Fun Keys</a></td><td>One player arcade game, similar to guitar-hero gameplay</td></tr>
-    <tr><td><a target="_blank" href="https://github.com/ObjSal/Metal-Breaker">Metal Breaker</a></td><td>One player brick-breaker style arcade game</td></tr>
-  </table>
-  <br>
-  <footer>Follow me on <a target="_blank" href="https://twitter.com/ObjSal">Twitter</a></footer>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">&gt; guerrero.vip</a>
+      <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#games">Games</a></li>
+        <li><a href="#experience">Experience</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-content">
+      <img class="hero-avatar" src="profile.jpg" alt="Salvador Guerrero" width="140" height="140">
+      <h1>Salvador Guerrero</h1>
+      <p class="subtitle">Engineering Director at Trimble &middot; SketchUp</p>
+      <p class="tagline">Pragmatic Leader &bull; AI &bull; &#8383;itcoin &bull; Cross-Platform &bull; Open Source &bull; Colorado, USA</p>
+      <div class="social-links">
+        <a href="https://github.com/ObjSal" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/objsal/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://x.com/ObjSal" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          X
+        </a>
+        <a href="https://objsal.medium.com/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+          Medium
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-header">
+      <h2><span class="accent">/</span> About</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>&#128736;&#65039; What I Do</h3>
+        <p>Engineering Director at Trimble with 15+ years of experience, currently leading SketchUp's client engineering and AI initiatives across the organization. I build and scale high-performing teams, having grown an R&D center from zero to over 100 engineers. I ship cross-platform products across web, desktop, mobile, and XR.</p>
+      </div>
+      <div class="about-card">
+        <h3>&#9889; Interests</h3>
+        <p>Deeply passionate about Bitcoin and the Lightning Network &mdash; I build open source tools for the ecosystem, write about Taproot, PSBTs, and self-custody, and cover Bitcoin development, security, and Node.js on Medium. I also contribute to open source projects spanning cryptography libraries, game development, and cross-platform tooling.</p>
+      </div>
+      <div class="about-card">
+        <h3>&#127891; Education</h3>
+        <p>Engineer's degree in Computer Science from CETYS Universidad (2005-2009). Speaker at Phoenix Mobile Festival and Phoenix Mobile Technology Group.</p>
+      </div>
+      <div class="about-card">
+        <h3>&#128187; Technologies</h3>
+        <ul>
+          <li>JavaScript</li>
+          <li>C++</li>
+          <li>Python</li>
+          <li>Bitcoin Script</li>
+          <li>Solidity</li>
+          <li>Swift</li>
+          <li>Kotlin</li>
+          <li>Objective-C</li>
+          <li>Java</li>
+          <li>C#</li>
+          <li>Node.js</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools & Projects -->
+  <section id="tools">
+    <div class="section-header">
+      <h2><span class="accent">/</span> Tools &amp; Projects</h2>
+      <p>Open source developer tools and Bitcoin projects</p>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="https://objsal.github.io/bitcoin-gift-paper-wallet/" target="_blank" rel="noopener">
+        <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="24" height="24" style="vertical-align: middle; margin-right: 2px;"><circle cx="32" cy="32" r="32" fill="#f7931a"/><text x="32" y="46" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="42" fill="#fff" transform="rotate(-12 32 32)">&#x20bf;</text></svg> Bitcoin Gift Paper Wallet</h3>
+        <p>A self-contained Bitcoin paper wallet generator that creates gift-ready Bitcoin bills as printable images.</p>
+        <div class="card-meta">
+          <span class="tag bitcoin">Bitcoin</span>
+          <span class="tag">Python</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://objsal.github.io/PBKDF2/" target="_blank" rel="noopener">
+        <h3>&#128272; PBKDF2</h3>
+        <p>Online tool to test your Password-Based Key Derivation Function 2 implementation.</p>
+        <div class="card-meta">
+          <span class="tag">Cryptography</span>
+          <span class="tag">JavaScript</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://objsal.github.io/base-encoder/" target="_blank" rel="noopener">
+        <h3>&#128260; Base Encoder/Decoder</h3>
+        <p>Not a typical char by char conversion. A proper base encoding and decoding tool.</p>
+        <div class="card-meta">
+          <span class="tag">Encoding</span>
+          <span class="tag">JavaScript</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://objsal.github.io/base64/" target="_blank" rel="noopener">
+        <h3>&#128196; Base64 Encode &#8644; Decode</h3>
+        <p>Online tool to encode and decode Base64 strings quickly.</p>
+        <div class="card-meta">
+          <span class="tag">Encoding</span>
+          <span class="tag">JavaScript</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://gist.github.com/ObjSal/fa8a340b3e8db4a73b9b6cbf88cf9b94" target="_blank" rel="noopener">
+        <h3>&#128220; base58check.py</h3>
+        <p>Base58Check implementation in Python for Bitcoin address encoding.</p>
+        <div class="card-meta">
+          <span class="tag bitcoin">Bitcoin</span>
+          <span class="tag">Python</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://github.com/ObjSal/join-psbts" target="_blank" rel="noopener">
+        <h3>&#128279; Join PSBTs</h3>
+        <p>Helps create PSBTs (Partially Signed Bitcoin Transactions) using inputs from different wallets.</p>
+        <div class="card-meta">
+          <span class="tag bitcoin">Bitcoin</span>
+          <span class="tag">HTML</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://github.com/ObjSal/computer-time" target="_blank" rel="noopener">
+        <h3>&#9200; Computer Time</h3>
+        <p>Track kid's computer time, tasks and rewards with Bitcoin via LNbits.</p>
+        <div class="card-meta">
+          <span class="tag bitcoin">Bitcoin</span>
+          <span class="tag">LNbits</span>
+          <span class="tag">MongoDB</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://github.com/ObjSal/svgc" target="_blank" rel="noopener">
+        <h3>&#128295; svgc</h3>
+        <p>Perform arithmetic operations within SVG files. The ByteApps logo was created using this tool.</p>
+        <div class="card-meta">
+          <span class="tag">SVG</span>
+          <span class="tag">Archived</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://github.com/ObjSal/UIGifImage" target="_blank" rel="noopener">
+        <h3>&#127912; UIGifImage</h3>
+        <p>Adds GIF support in iOS. Open source library with 6 stars.</p>
+        <div class="card-meta">
+          <span class="tag">iOS</span>
+          <span class="tag">Objective-C</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section id="blog">
+    <div class="section-header">
+      <h2><span class="accent">/</span> Blog</h2>
+      <p>Technical articles on Bitcoin, security, and web development</p>
+    </div>
+    <div class="blog-list">
+      <a class="blog-item" href="https://objsal.medium.com/bitcoin-psbt-builder-f58e9f7d5a40" target="_blank" rel="noopener">
+        <span class="blog-date">May 2025</span>
+        <h3>Bitcoin PSBT Builder</h3>
+        <span class="arrow">&rarr;</span>
+      </a>
+      <a class="blog-item" href="https://objsal.medium.com/bitcoin-taproot-puzzles-c85c887d04b6" target="_blank" rel="noopener">
+        <span class="blog-date">May 2025</span>
+        <h3>Bitcoin Taproot Puzzles</h3>
+        <span class="arrow">&rarr;</span>
+      </a>
+      <a class="blog-item" href="https://objsal.medium.com/bitcoin-taproot-hello-world-4e831d7cb746" target="_blank" rel="noopener">
+        <span class="blog-date">May 2025</span>
+        <h3>Bitcoin Taproot Hello World</h3>
+        <span class="arrow">&rarr;</span>
+      </a>
+      <a class="blog-item" href="https://objsal.medium.com/free-bitcoin-transactions-with-lnbits-bd5b3933f082" target="_blank" rel="noopener">
+        <span class="blog-date">Oct 2023</span>
+        <h3>Free Bitcoin Transactions with LNbits</h3>
+        <span class="arrow">&rarr;</span>
+      </a>
+      <a class="blog-item" href="https://objsal.medium.com/backup-core-lightning-and-lnbits-77017971d60d" target="_blank" rel="noopener">
+        <span class="blog-date">Sep 2023</span>
+        <h3>Backup core-lightning and LNBits</h3>
+        <span class="arrow">&rarr;</span>
+      </a>
+      <a class="blog-item" href="https://medium.com/@ObjSal/add-jwt-authentication-to-node-js-78f59a31adc4" target="_blank" rel="noopener">
+        <span class="blog-date">Article</span>
+        <h3>Add JWT Authentication to Node.js</h3>
+        <span class="arrow">&rarr;</span>
+      </a>
+      <a class="blog-item" href="https://medium.com/@ObjSal/a-safer-way-to-deal-with-passwords-6f59a31adc4" target="_blank" rel="noopener">
+        <span class="blog-date">Article</span>
+        <h3>A Safer Way to Deal with Passwords</h3>
+        <span class="arrow">&rarr;</span>
+      </a>
+      <a class="blog-item" href="https://medium.com/javascript-in-plain-english/parsing-post-data-3-different-ways-in-node-js-e39d9d11ba8" target="_blank" rel="noopener">
+        <span class="blog-date">Article</span>
+        <h3>Parsing POST Data 3 Different Ways in Node.js</h3>
+        <span class="arrow">&rarr;</span>
+      </a>
+    </div>
+    <a class="blog-more" href="https://objsal.medium.com/" target="_blank" rel="noopener">Read more on Medium &rarr;</a>
+  </section>
+
+  <!-- Games -->
+  <section id="games">
+    <div class="section-header">
+      <h2><span class="accent">/</span> Games</h2>
+      <p>Game projects built for fun and to teach my kids to code</p>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="https://objsal.github.io/SpitBomb2-LevelEditor/" target="_blank" rel="noopener">
+        <h3>&#127918; SpitBomb v2 Level Editor</h3>
+        <p>Level editor and pixel art editor for SpitBomb v2.</p>
+        <div class="card-meta">
+          <span class="tag">HTML</span>
+          <span class="tag">Editor</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://github.com/ObjSal/Flappy-Unicorn" target="_blank" rel="noopener">
+        <h3>&#129412; Flappy Unicorn</h3>
+        <p>Created this project to show my kids how to create a game really quickly.</p>
+        <div class="card-meta">
+          <span class="tag">JavaScript</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://github.com/ObjSal/SpitBomb" target="_blank" rel="noopener">
+        <h3>&#128163; Spit Bomb</h3>
+        <p>2 player shooting game built in Java.</p>
+        <div class="card-meta">
+          <span class="tag">Java</span>
+          <span class="tag">2 Player</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://github.com/ObjSal/FunKeys" target="_blank" rel="noopener">
+        <h3>&#127928; Fun Keys</h3>
+        <p>One player arcade game, similar to guitar-hero gameplay.</p>
+        <div class="card-meta">
+          <span class="tag">Java</span>
+          <span class="tag">Arcade</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+      <a class="card" href="https://github.com/ObjSal/Metal-Breaker" target="_blank" rel="noopener">
+        <h3>&#129521; Metal Breaker</h3>
+        <p>One player brick-breaker style arcade game.</p>
+        <div class="card-meta">
+          <span class="tag">Java</span>
+          <span class="tag">Arcade</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="section-header">
+      <h2><span class="accent">/</span> Experience</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="period">Jan 2026 &ndash; Present</div>
+        <h3>Director of Engineering &ndash; SketchUp</h3>
+        <div class="company">Trimble Inc. &middot; Westminster, Colorado</div>
+        <p class="description">Leading the engineering vision for SketchUp's next chapter &mdash; driving platform modernization, AI integration, and innovation across web, desktop, and mobile experiences.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Dec 2021 &ndash; Oct 2023</div>
+        <h3>Head of Engineering</h3>
+        <div class="company">Trimble Inc. &middot; M&eacute;xico (Hybrid)</div>
+        <p class="description">Led the establishment and scaling of Trimble's R&D center in Mexico, growing the operation from zero to over 100 engineers and technical staff.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Apr 2019 &ndash; Nov 2021</div>
+        <h3>Engineering Manager &ndash; SketchUp</h3>
+        <div class="company">Trimble Inc. &middot; Boulder, Colorado</div>
+        <p class="description">Working on the next generation of SketchUp for innovative devices. Worked closely with Software Engineers, PM, QA, Scrum Master, and DevOps.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Mar 2017 &ndash; Mar 2019</div>
+        <h3>Lead Software Engineer &ndash; SketchUp</h3>
+        <div class="company">Trimble Inc. &middot; Boulder, Colorado</div>
+        <p class="description">Worked on SketchUp Viewers for Android, iOS, HoloLens, and VR devices. Languages: Swift, Kotlin, Objective-C, Java, C#, C++, Python, JavaScript.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Apr 2016 &ndash; Mar 2017</div>
+        <h3>Software Engineer &ndash; SketchUp</h3>
+        <div class="company">Trimble Inc. &middot; Boulder, Colorado</div>
+        <p class="description">Worked on the SketchUp C SDK and the SketchUp Ruby API for macOS and Windows.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Aug 2010 &ndash; Mar 2016</div>
+        <h3>Lead Software Engineer &ndash; Trimble Outdoors</h3>
+        <div class="company">Trimble Inc. &middot; Tempe, Arizona</div>
+        <p class="description">Worked on Trimble Outdoors, AllSport, and Terrain Navigator Pro mobile apps.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="period">May 2007 &ndash; Mar 2010</div>
+        <h3>Game Programmer</h3>
+        <div class="company">Mexicali, Baja California, Mexico</div>
+        <p class="description">Worked on a variety of games for feature phones. Languages: Java Micro Edition (J2ME) and Qualcomm BREW (C++).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="https://github.com/ObjSal" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/objsal/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://x.com/ObjSal" target="_blank" rel="noopener">X</a>
+        <a href="https://objsal.medium.com/" target="_blank" rel="noopener">Medium</a>
+      </div>
+      <p class="copyright">&copy; 2026 Salvador Guerrero</p>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+
 </body>
+</html>
