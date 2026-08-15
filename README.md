@@ -1,7 +1,7 @@
 # byteapps.github.io
 
 Company website for **ByteApps LLC** — an independent software studio in
-Denver, Colorado. Maker of [Graffito](https://byteapps.github.io/graffito/companion/)
+Denver, Colorado. Maker of [Graffito](https://byteapps.com/graffito/companion/)
 and open-source tools for the Passport Prime.
 
 - **URL**: [byteapps.com](https://byteapps.com) (forwards here)
