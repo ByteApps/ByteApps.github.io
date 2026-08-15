@@ -1,15 +1,12 @@
-# guerrero.vip
+# byteapps.github.io
 
-Personal professional website for Salvador Guerrero.
+Company website for **ByteApps LLC** — an independent software studio in
+Denver, Colorado. Maker of [Graffito](https://objsal.github.io/graffito/companion/)
+and open-source tools for the Passport Prime.
 
-Built as a single-page static site hosted on GitHub Pages. Features sections for experience, tools & projects, blog posts, and games.
+- **URL**: [byteapps.com](https://byteapps.com) (forwards here)
+- **Stack**: a single `index.html` — no frameworks, no build step
+- **Contact**: contact@byteapps.com
 
-## Tech Stack
-
-- Pure HTML, CSS, and JavaScript (no frameworks or build tools)
-- Google Fonts (Inter, JetBrains Mono)
-- Responsive design with mobile support
-
-## Live
-
-[guerrero.vip](https://guerrero.vip)
+The personal site that previously lived here has moved to
+[objsal.github.io](https://objsal.github.io).
