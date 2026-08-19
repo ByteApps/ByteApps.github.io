@@ -141,6 +141,17 @@
     </div>
   </section>
 
+  <section id="verify">
+    <h2>Verify our apps</h2>
+    <p>Passport&nbsp;Prime apps from ByteApps are signed with our publisher
+    certificate — <a href="byteapps.crt" download>byteapps.crt</a>. Before
+    trusting it on your device (Settings &gt; Apps &gt; Allowed Publishers),
+    check that its fingerprint matches:</p>
+    <p><code style="display:block;overflow-wrap:anywhere;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;font-size:14px">1bca27c8e765a77fd44922bc058b815b46e627d68f2996e8c38ca6997b6be6f9</code></p>
+    <p><small>Reproduce it yourself — SHA-256 of the certificate's compressed public key:<br>
+    <code style="overflow-wrap:anywhere">openssl x509 -in byteapps.crt -pubkey -noout | openssl ec -pubin -conv_form compressed -outform DER | tail -c 33 | shasum -a 256</code></small></p>
+  </section>
+
   <section id="contact">
     <h2>Contact</h2>
     <p>ByteApps LLC · Denver, Colorado<br>
