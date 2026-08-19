@@ -47,6 +47,10 @@
   .card h3 { font-size: 1.25rem; margin-bottom: 6px; }
   .card p { color: var(--text-dim); }
   .card .links { margin-top: 12px; }
+  .store-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+  .store-badges img { height: 48px; width: auto; display: block; }
+  .store-badges a:hover img { opacity: 0.85; }
+  .trademark { margin-top: 10px; font-size: 0.72rem; color: var(--text-dim); opacity: 0.7; }
   /* Slint attribution. Section 2 of the Slint Royalty-free Desktop, Mobile
      and Web Applications License 2.0 grants the license only if the app
      shows the AboutSlint widget or this badge sits on a public page where
@@ -104,11 +108,17 @@
         completely offline — on a Passport Prime or your own devices — then
         broadcast from anywhere. Your words, sealed by your keys, carried by the
         most durable public record ever built.</p>
+        <div class="store-badges">
+          <a href="https://testflight.apple.com/join/WctNAbGu" aria-label="Join the iPhone and Mac beta on TestFlight">
+            <img src="assets/badges/testflight.svg" alt="Join the beta on TestFlight"></a>
+          <a href="https://play.google.com/store/apps/details?id=com.byteapps.graffito" aria-label="Get the Android beta on Google Play">
+            <img src="assets/badges/google-play.svg" alt="Get it on Google Play"></a>
+        </div>
         <p class="links">
-          <a href="https://testflight.apple.com/join/WctNAbGu">Join the iPhone &amp; Mac beta</a> ·
-          <a href="https://play.google.com/store/apps/details?id=com.byteapps.graffito">Join the Android beta</a> ·
           <a href="https://byteapps.com/graffito/companion/">Web companion</a>
         </p>
+        <p class="trademark">Apple, the Apple logo, and TestFlight are trademarks of Apple Inc.
+        Google Play and the Google Play logo are trademarks of Google LLC.</p>
       </div>
     </div>
   </section>
