@@ -28,10 +28,16 @@ there, byteapps.com here.
   developer accounts. Contact email: contact@byteapps.com.
 - Products list Graffito first; open-source Prime tools link to the ByteApps
   GitHub repos.
-- The Graffito card carries the public beta links: TestFlight
-  https://testflight.apple.com/join/WctNAbGu (iPhone + Mac) and the Play
-  store listing https://play.google.com/store/apps/details?id=com.byteapps.graffito
-  (Android open testing). Swap these for store links at 1.0 launch.
+- The Graffito card carries the public beta links as store-style badge
+  buttons (`assets/badges/testflight.svg` + `google-play.svg` — hand-drawn
+  local SVGs, black-pill style, so the page stays dependency-free):
+  TestFlight https://testflight.apple.com/join/WctNAbGu (iPhone + Mac) and
+  the Play listing https://play.google.com/store/apps/details?id=com.byteapps.graffito
+  (Android open testing). A trademark-attribution line sits under the card.
+  At 1.0 launch, swap for the OFFICIAL "Download on the App Store" /
+  "Get it on Google Play" badge artwork (the hand-drawn ones exist because
+  no official TestFlight badge exists and the App Store badge would be
+  wrong for a beta).
 
 ## Development
 
